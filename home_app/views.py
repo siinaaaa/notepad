@@ -12,9 +12,9 @@ def home(request):
         print(modify.id)
         modify.number = note.id
         modify.save()
-        return redirect('/')
+        return redirect('home:send')
 
-    return render(request, 'home_app/index.html')
+    return render(request, 'home_app/indexes.html')
 
 
 def undo(request):
