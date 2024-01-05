@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import Note
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Note, Modify
 
 
 # Create your views here.
@@ -7,14 +7,39 @@ from .models import Note
 
 def home(request):
     if request.method == 'POST':
-        Note.objects.create(text=request.POST.get('text'))
+        note = Note.objects.create(text=request.POST.get('text'))
+        modify = Modify.objects.first()
+        print(modify.id)
+        modify.number = note.id
+        modify.save()
         return redirect('/')
 
     return render(request, 'home_app/index.html')
 
 
 def undo(request):
-    notes = Note.objects.all()
-    return render(request, 'home_app/indexes.html', {'notes': notes})
+    index = func_to_undo()
+    note = get_object_or_404(Note, id=index)
+    return render(request, 'home_app/indexes.html', {'notes': note})
 
 
+def func_to_undo():
+    modify = Modify.objects.first()
+    index = modify.number - 1
+    modify.number += -1
+    modify.save()
+    return index
+
+
+def redo(request):
+    index = func_to_redo()
+    note = get_object_or_404(Note, id=index)
+    return render(request, 'home_app/indexes.html', {'notes': note})
+
+
+def func_to_redo():
+    modify = Modify.objects.first()
+    index = modify.number + 1
+    modify.number += 1
+    modify.save()
+    return index

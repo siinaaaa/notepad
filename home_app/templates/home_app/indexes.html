@@ -56,22 +56,39 @@
             <h2>Sign In</h2>
 
             <div class="form">
+                <form method="post"action="{% url 'home:send' %}">
+                    {% csrf_token %}
 
                     <div class="inputBox">
 
                         <input type="text" name="text" required> <i>Text</i>
-                        <p style="color: #aaaaaa">{% for item in notes %}
-                            {{ item.text }}
-                            {% endfor %}
+                        <p style="color: #aaaaaa">
+                            {{ notes.text }}
+
                         </p>
-
-                    </div>
-
-                    <div class="inputBox">
+                          <div class="inputBox">
 
                         <input type="submit" value="Send">
 
                     </div>
+                    </div>
+                    </form>
+                       <div class="inputBox">
+
+                        <a href="{% url 'home:undo' %}" style="color: #aaaaaa"> Undo</a>
+
+                    </div>
+                    <div class="inputBox">
+
+                        <a href="{% url 'home:redo' %}" style="color: #aaaaaa">
+                            Redo
+
+                        </a>
+
+                    </div>
+
+
+
 
 
 

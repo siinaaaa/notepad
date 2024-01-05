@@ -3,5 +3,6 @@ from . import views
 app_name = 'home'
 urlpatterns = [
     path('', views.home, name='send'),
-    path('redo&&undo', views.undo, name='undo&&redo')
+    path('undo', views.undo, name='undo'),
+    path('redo', views.redo, name='redo')
 ]
