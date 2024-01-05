@@ -9,3 +9,7 @@ class Note(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Modify(models.Model):
+    number = models.SmallIntegerField(null=True, blank=True)
