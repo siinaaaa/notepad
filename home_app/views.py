@@ -6,13 +6,18 @@ from .models import Note, Modify
 
 
 def home(request):
+    counter = 0
     if request.method == 'POST':
+        text = request.POST.get('text')
+        note = Note.objects.filter(text=text)
+        for item in note:
+            counter += 1
+        counter += 1
         note = Note.objects.create(text=request.POST.get('text'))
         modify = Modify.objects.first()
-        print(modify.id)
         modify.number = note.id
         modify.save()
-        return redirect('home:send')
+        return render(request, 'home_app/indexes.html', {'number': counter})
 
     return render(request, 'home_app/indexes.html')
 
